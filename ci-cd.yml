@@ -1,0 +1,55 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sast:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run SAST
+        # Tambahkan langkah untuk menjalankan alat SAST (misalnya, Bandit untuk Python)
+        run: |
+          # Tambahkan perintah untuk menjalankan SAST di sini
+          # Contoh untuk Bandit: bandit -r .
+
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and Push Docker Image
+        # Tambahkan langkah untuk membangun dan mendorong gambar kontainer ke Docker Hub
+        run: |
+          # Tambahkan perintah untuk membangun dan mendorong gambar kontainer
+          # Contoh: docker build -t nama-image:tag .
+          #        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          #        docker push nama-image:tag
+
+  container_scanning:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Container Image Scanning
+        # Tambahkan langkah untuk melakukan pemindaian gambar kontainer
+        run: |
+          # Tambahkan perintah untuk pemindaian gambar kontainer
+          # Contoh: Trivy untuk pemindaian gambar Docker
+          #        trivy --exit-code 0 --severity HIGH,CRITICAL nama-image:tag
